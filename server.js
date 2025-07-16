@@ -13,7 +13,7 @@ const allowedOrigins = [
   "http://localhost",
   "http://localhost:3000",
   "http://127.0.0.1:5500",
-  "https://scaelz.github.io/lndng/",
+  "https://scaelz.github.io",
 ];
 
 // Middleware
@@ -29,7 +29,7 @@ app.use(
       if (allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error("Домен не разрешен для CORS"));
+        callback(new Error(`Домен ${origin} не разрешен для CORS`));
       }
     },
     methods: ["POST", "OPTIONS"],
@@ -85,7 +85,6 @@ app.post("/api/submit-ticket", upload.single("proof"), async (req, res) => {
     });
     fs.unlinkSync(proofFile.path);
 
-    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500"); // Ваш фронтенд
     res.header("Access-Control-Allow-Methods", "POST");
     res.header("Access-Control-Allow-Headers", "Content-Type");
     res
